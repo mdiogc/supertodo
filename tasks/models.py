@@ -7,7 +7,7 @@ from django.db import models
 
 class Task(models.Model):
     name = models.CharField(max_length=100)
-    description = models.TextField(default='')
+    description = models.TextField(default='', blank=True)
     slug = models.SlugField(unique=True, blank=True)
     done = models.BooleanField(default='False')
     complete_before = models.DateTimeField(default=datetime.now)

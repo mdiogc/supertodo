@@ -10,7 +10,7 @@ def task(request):
     tasks = Task.objects.all()
     return render(
         request,
-        'task/task.html',
+        'tasks/base.html',
         {'num_tasks': num_tasks, 'tasks': tasks},
     )
 
