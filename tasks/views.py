@@ -15,6 +15,6 @@ def task(request):
     )
 
 
-# def task_detail(request, post_slug: str):
-# task = Task.objects.get(slug=post_slug)
-# return render(request, 'tasks/detail.html', dict(task=task))
+def task_detail(request, post_slug: str):
+    task = Task.objects.get(slug=post_slug)
+    return render(request, 'tasks/detail.html', dict(task=task))
