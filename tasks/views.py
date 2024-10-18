@@ -12,7 +12,7 @@ def task(request):
     tasks = Task.objects.all()
     return render(
         request,
-        'tasks/base.html',
+        'templates/base.html',
         {'num_tasks': num_tasks, 'tasks': tasks},
     )
 
