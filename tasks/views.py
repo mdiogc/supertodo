@@ -27,4 +27,4 @@ def add_task(request):
             task.slug = slugify(task.name)
             task.save()
             return redirect('task:task')
-    return render(request, 'templates/add.html', dict(form=form))
+    return render(request, 'templates/add-task.html', dict(form=form))
