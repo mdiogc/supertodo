@@ -1,3 +1,4 @@
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 from django.utils.text import slugify
 
@@ -7,14 +8,9 @@ from .models import Task
 # Create your views here.
 
 
-def task(request):
-    num_tasks = Task.objects.count()
+def task_list(request: HttpRequest) -> HttpResponse:
     tasks = Task.objects.all()
-    return render(
-        request,
-        'templates/base.html',
-        {'num_tasks': num_tasks, 'tasks': tasks},
-    )
+    return render(request, 'tasks/task-list.html', dict(task=tasks))
 
 
 def task_detail(request, task_slug: str):
@@ -31,4 +27,4 @@ def add_task(request):
             task.slug = slugify(task.name)
             task.save()
             return redirect('task:task')
-    return render(request, 'template/add.html', dict(form=form))
+    return render(request, 'templates/add.html', dict(form=form))
