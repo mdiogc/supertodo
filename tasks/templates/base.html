@@ -8,22 +8,6 @@
 <body>
   {% block body %} 
   <h1>Check your tasks!</h1>
-    
-  {% for task in tasks %}
-  <div class='task-box'>
-      <h2>{{ task.name }}</h2>
-      
-      <p>{% if task.done %} ✅ {% else %} ❌ {% endif %}</p>
-      
-      <p>
-          <a href="{% url 'tasks:task_detail' task.slug %}">Discover more</a>
-      </p>
-      
-      <div class='task-date'>
-          <strong>Until the day: </strong>{{ task.complete_before }}
-      </div>
-  </div>
-  {% endfor %}
   {% endblock body %}
 </body>
 </html>

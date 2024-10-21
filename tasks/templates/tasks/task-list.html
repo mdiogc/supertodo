@@ -5,22 +5,19 @@
 {% endblock title %}
 
 {% block body %}
-    <h1>Check your tasks!</h1>
-    
-    {% for task in tasks %}
-    <div class='task-box'>
-        <h2>{{ task.name }}</h2>
-        
-        <p>{% if task.done %} ✅ {% else %} ❌ {% endif %}</p>
-        
-        <p>
-            <a href="{% url 'tasks:task_detail' task.slug %}">Discover more</a>
-        </p>
-        
-        <div class='task-date'>
-            <strong>Until the day: </strong>{{ task.complete_before }}
+        <div class="header-container">
+          <h1>Super To Do</h1>
         </div>
+    <h2>Check your tasks!</h2>
+
+    <div class="task-container"> 
+      {% for task in tasks %}
+            <li>{{ task.name }}</li>
+      {% empty %}
+          <p>No tasks so far!</p>
+      {% endfor %}
     </div>
-    {% endfor %}
+
+
 {% endblock body %}
 
