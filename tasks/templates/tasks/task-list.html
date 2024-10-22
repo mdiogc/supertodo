@@ -1,23 +1,55 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 
-{% block title %}
-    Super To Do | Organize your tasks
-{% endblock title %}
+{% block title %}Task List{% endblock %}
 
-{% block body %}
-        <div class="header-container">
-          <h1>Super To Do</h1>
-        </div>
-    <h2>Check your tasks!</h2>
+{% block content %}
+<h1>Task List</h1>
 
-    <div class="task-container"> 
-      {% for task in tasks %}
-            <li>{{ task.name }}</li>
-      {% empty %}
-          <p>No tasks so far!</p>
-      {% endfor %}
-    </div>
+<!-- Buttons to toggle completed and incomplete tasks -->
+<a href="{% url 'tasks:task_list' %}?show_completed=false" class="btn btn-primary">Show Incomplete Tasks</a>
+<a href="{% url 'tasks:task_list' %}?show_completed=true" class="btn btn-secondary">Show Completed Tasks</a>
+<a href="{% url 'tasks:add_task' %}" class="btn btn-success">Add Task</a>
 
+<!-- Incomplete Tasks -->
+{% if not show_completed %}
+<h2>Incomplete Tasks</h2>
+<ul>
+    {% for task in incomplete_tasks %}
+        <li>
+            <p>{{ task.name }} - Complete by: {{ task.complete_before }}</p>
+            <a href="{% url 'task-detail' task.slug %}">Details</a>
+            <a href="{% url 'edit_task' task.slug %}">Edit</a>
+            <a href="{% url 'delete_task' task.slug %}">Delete</a>
+            <form method="post" action="{% url 'toggle_task' task.slug %}">
+                {% csrf_token %}
+                <button type="submit">
+                    {% if task.done %}Mark as Incomplete{% else %}Mark as Completed{% endif %}
+                </button>
+            </form>
+        </li>
+    {% endfor %}
+</ul>
+{% endif %}
 
-{% endblock body %}
+<!-- Completed Tasks -->
+{% if show_completed %}
+<h2>Completed Tasks</h2>
+<ul>
+    {% for task in completed_tasks %}
+        <li>
+            <p>{{ task.name }} - Completed on: {{ task.updated_at }}</p>
+            <a href="{% url 'task-detail' task.slug %}">Details</a>
+            <a href="{% url 'edit-task' task.slug %}">Edit</a>
+            <a href="{% url 'delete-task' task.slug %}">Delete</a>
+            <form method="post" action="{% url 'toggle-task' task.slug %}">
 
+                {% csrf_token %}
+                <button type="submit">
+                    {% if task.done %}Mark as Incomplete{% else %}Mark as Completed{% endif %}
+                </button>
+            </form>
+        </li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endblock %}

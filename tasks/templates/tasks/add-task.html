@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Add New Task{% endblock %}
+
+{% block content %}
+<h1>Add New Task</h1>
+<form method="post">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="{{ form.name.id_for_label }}">Task Name:</label>
+        {{ form.name }}  <!-- This will render the name field -->
+    </div>
+
+    <div class="form-group">
+        <label for="{{ form.description.id_for_label }}">Description:</label>
+        {{ form.description }}  <!-- This will render the description field -->
+    </div>
+
+    <div class="form-group">
+        <label for="{{ form.complete_before.id_for_label }}">Complete By:</label>
+        {{ form.complete_before }}  <!-- This will render the complete_before field -->
+    </div>
+
+    <button type="submit" class="btn btn-primary">Add Task</button>
+</form>
+{% endblock %}
