@@ -8,5 +8,5 @@
     {% csrf_token %}
     <button type="submit">Confirm Delete</button>
 </form>
-<a href="{% url 'tasks:task_detail' task.slug %}">Cancel</a>
+<a href="{% url 'task-detail' task.slug %}">Cancel</a>
 {% endblock %}

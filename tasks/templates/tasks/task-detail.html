@@ -13,8 +13,8 @@
     <p>Complete by: {{ task.complete_before }}</p>
     <p>Created at: {{ task.created_at }}</p>
     <p>Updated at: {{ task.updated_at }}</p>
-    <a href="{% url 'tasks:edit-task' task.slug %}">Edit Task</a>
-    <form method="post" action="{% url 'tasks:toggle-task' task.slug %}">
+    <a href="{% url 'tasks:edit_task' task.slug %}">Edit Task</a>
+    <form method="post" action="{% url 'tasks:toggle_task' task.slug %}">
         {% csrf_token %}
         <button type="submit">
             {% if task.done %}Mark as Incomplete{% else %}Mark as Completed{% endif %}
