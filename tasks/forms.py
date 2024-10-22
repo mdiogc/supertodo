@@ -10,9 +10,10 @@ class AddTaskForm(forms.ModelForm):
 
     class Meta:
         model = Task
-        fields = ('name', 'description', 'complete_before')  # Add complete_before to fields
+        fields = ('name', 'description', 'complete_before', 'done')  # Add 'done' to fields
         widgets = {
             'name': forms.widgets.TextInput(attrs={'class': 'form-control'}),
             'description': forms.widgets.Textarea(attrs={'class': 'form-control'}),
             'complete_before': forms.widgets.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local'})  # Style the complete_before field
+            # For 'done', we'll handle the checkbox in the template
         }

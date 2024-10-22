@@ -7,14 +7,20 @@ from .models import Task
 
 
 def task_list(request: HttpRequest) -> HttpResponse:
-    show_completed = request.GET.get('show_completed', 'false') == 'true'
+    show_completed = request.GET.get('show_completed', 'all')
 
-    if show_completed:
+    # Obtener todas las tareas
+    all_tasks = Task.objects.all().order_by('done', 'complete_before')
+    
+    if show_completed == 'true':
+        completed_tasks = all_tasks.filter(done=True)
         incomplete_tasks = []
-        completed_tasks = Task.objects.filter(done=True).order_by('updated_at')
-    else:
-        incomplete_tasks = Task.objects.filter(done=False).order_by('complete_before')
+    elif show_completed == 'false':
         completed_tasks = []
+        incomplete_tasks = all_tasks.filter(done=False)
+    else:  # 'all'
+        completed_tasks = all_tasks.filter(done=True)
+        incomplete_tasks = all_tasks.filter(done=False)
 
     return render(
         request,
@@ -25,6 +31,9 @@ def task_list(request: HttpRequest) -> HttpResponse:
             'show_completed': show_completed,
         },
     )
+
+
+
 
 
 def task_detail(request: HttpRequest, task_slug: str) -> HttpResponse:
@@ -43,18 +52,20 @@ def add_task(request: HttpRequest) -> HttpResponse:
             task = form.save(commit=False)
             task.slug = slugify(task.name)
             task.save()
-            return redirect('tasks:task_list')
+            return redirect('tasks:task-list')
     return render(request, 'tasks/add-task.html', {'form': form})
 
 
 def edit_task(request: HttpRequest, task_slug: str) -> HttpResponse:
     task = Task.objects.filter(slug=task_slug).first()
-    return HttpResponse('Task not found', status=404)
+    if task is None:
+        return HttpResponse('Task not found', status=404)
+
     if request.method == 'POST':
         form = AddTaskForm(request.POST, instance=task)
         if form.is_valid():
             form.save()
-            return redirect('tasks:task_detail', task_slug=task.slug)
+            return redirect('tasks:task-detail', task_slug=task.slug)
     else:
         form = AddTaskForm(instance=task)
 
@@ -68,7 +79,7 @@ def delete_task(request: HttpRequest, task_slug: str) -> HttpResponse:
 
     if request.method == 'POST':
         task.delete()
-        return redirect('tasks:task_list')
+        return redirect('tasks:task-list')
 
     return render(request, 'tasks/delete-task.html', {'task': task})
 
@@ -79,4 +90,7 @@ def toggle_task(request: HttpRequest, task_slug: str) -> HttpResponse:
         return HttpResponse('Task not found', status=404)
     task.done = not task.done
     task.save()
-    return redirect('tasks:task_list')
+    return redirect('tasks:task-list')
+
+
+

@@ -1,0 +1,35 @@
+body {
+    background-image: url('../images/fish.jpeg'); /* Ajusta la ruta según tu estructura */
+    background-size: cover; /* Esto hará que la imagen cubra toda el área */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    background-position: center; /* Centra la imagen de fondo */
+    color: #fff; /* Cambia el color del texto si es necesario */
+}
+
+.navbar {
+    background-color: #4a90e2; /* Color de la barra de navegación */
+}
+
+.navbar .nav-link {
+    color: #fff; /* Color de los enlaces de navegación */
+}
+
+.navbar .nav-link:hover {
+    color: #ffeb3b; /* Color de los enlaces al pasar el ratón */
+}
+
+.container {
+    padding: 20px; /* Espaciado dentro del contenedor */
+}
+
+.task-box {
+    background-color: #ffffff; /* Color de fondo de la caja de tarea */
+    border: 1px solid #ccc; /* Bordes de la caja de tarea */
+    border-radius: 8px; /* Esquinas redondeadas */
+    margin-bottom: 15px; /* Espaciado entre las cajas */
+    padding: 15px; /* Espaciado interno */
+}
+
+button {
+    margin: 5px; /* Espaciado entre botones */
+}
