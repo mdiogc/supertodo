@@ -10,10 +10,10 @@
 <body>
     <header>
         <nav>
-          <a href="{% url 'task-list' %}">Home</a>  
-          <a href="{% url 'add-task' %}">Add Task</a>
-          <a href="{% url 'task-list' %}?view=completed">Completed Tasks</a>
-          <a href="{% url 'task-list' %}?view=incomplete">Incomplete Tasks</a>
+          <a href="{% url 'tasks:task-list' %}">Home</a>  
+          <a href="{% url 'tasks:add-task' %}">Add Task</a>
+          <a href="{% url 'tasks:task-list' %}?view=completed">Completed Tasks</a>
+          <a href="{% url 'tasks:task-list' %}?view=incomplete">Incomplete Tasks</a>
           
         </nav>
     </header>

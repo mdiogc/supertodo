@@ -6,9 +6,9 @@
 <h1>Task List</h1>
 
 <!-- Buttons to toggle completed and incomplete tasks -->
-<a href="{% url 'task-list' %}?show_completed=false" class="btn btn-primary">Show Incomplete Tasks</a>
-<a href="{% url 'task-list' %}?show_completed=true" class="btn btn-secondary">Show Completed Tasks</a>
-<a href="{% url 'add-task' %}" class="btn btn-success">Add Task</a>
+<a href="{% url 'tasks:task-list' %}?show_completed=false" class="btn btn-primary">Show Incomplete Tasks</a>
+<a href="{% url 'tasks:task-list' %}?show_completed=true" class="btn btn-secondary">Show Completed Tasks</a>
+<a href="{% url 'tasks:add-task' %}" class="btn btn-success">Add Task</a>
 
 <!-- Incomplete Tasks -->
 {% if not show_completed %}
@@ -17,10 +17,10 @@
     {% for task in incomplete_tasks %}
         <li>
             <p>{{ task.name }} - Complete by: {{ task.complete_before }}</p>
-            <a href="{% url 'task-detail' task.slug %}">Details</a>
-            <a href="{% url 'edit-task' task.slug %}">Edit</a>
-            <a href="{% url 'delete-task' task.slug %}">Delete</a>
-            <form method="post" action="{% url 'toggle-task' task.slug %}">
+            <a href="{% url 'tasks:task-detail' task.slug %}">Details</a>
+            <a href="{% url 'tasks:edit-task' task.slug %}">Edit</a>
+            <a href="{% url 'tasks:delete-task' task.slug %}">Delete</a>
+            <form method="post" action="{% url 'tasks:toggle-task' task.slug %}">
                 {% csrf_token %}
                 <button type="submit">
                     {% if task.done %}Mark as Incomplete{% else %}Mark as Completed{% endif %}
@@ -38,9 +38,9 @@
     {% for task in completed_tasks %}
         <li>
             <p>{{ task.name }} - Completed on: {{ task.updated_at }}</p>
-            <a href="{% url 'tasks:task_list' task.slug %}">Details</a>
-            <a href="{% url 'tasks:edit_task' task.slug %}">Edit</a>
-            <a href="{% url 'tasks:delete_task' task.slug %}">Delete</a>
+            <a href="{% url 'tasks:task-list' task.slug %}">Details</a>
+            <a href="{% url 'tasks:edit-task' task.slug %}">Edit</a>
+            <a href="{% url 'tasks:delete-task' task.slug %}">Delete</a>
             <form method="post" action="{% url 'tasks:toggle_task' task.slug %}">
 
                 {% csrf_token %}
