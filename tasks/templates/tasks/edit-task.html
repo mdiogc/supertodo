@@ -1,15 +1,26 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Edit Task{% endblock %}
 
 {% block content %}
-<h1>Edit Task</h1>
-
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}  <!-- Esto mostrará el formulario en un formato de párrafo -->
-    <button type="submit" class="btn btn-primary">Save Changes</button>
-    <a href="{% url 'tasks:task-list' %}" class="btn btn-secondary">Cancel</a>
-</form>
-
+<div class="container mt-5">
+    <h2>Edit Task</h2>
+    <form action="{% url 'tasks:edit-task' task.slug %}" method="post" class="mt-4">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="taskName">Task Name</label>
+            <input type="text" class="form-control" id="taskName" name="name" value="{{ task.name }}" required>
+        </div>
+        <div class="form-group">
+            <label for="taskDescription">Description</label>
+            <textarea class="form-control" id="taskDescription" name="description" rows="4" required>{{ task.description }}</textarea>
+        </div>
+        <div class="form-group">
+            <label for="completeBefore">Complete Before</label>
+            <input type="date" class="form-control" id="completeBefore" name="complete_before" value="{{ task.complete_before|date:'Y-m-d' }}" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Update Task</button>
+    </form>
+</div>
 {% endblock %}
