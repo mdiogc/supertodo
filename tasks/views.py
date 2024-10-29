@@ -9,7 +9,6 @@ from .models import Task
 def task_list(request: HttpRequest) -> HttpResponse:
     show_completed = request.GET.get('show_completed', 'all')
 
-    # Obtener todas las tareas
     all_tasks = Task.objects.all().order_by('done', 'complete_before')
     
     if show_completed == 'true':
@@ -18,7 +17,7 @@ def task_list(request: HttpRequest) -> HttpResponse:
     elif show_completed == 'false':
         completed_tasks = []
         incomplete_tasks = all_tasks.filter(done=False)
-    else:  # 'all'
+    else:  
         completed_tasks = all_tasks.filter(done=True)
         incomplete_tasks = all_tasks.filter(done=False)
 
